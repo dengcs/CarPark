@@ -10,6 +10,9 @@ import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import main.resources.MyResourcesPath;
 
 public final class Protocal {
@@ -35,6 +38,11 @@ public final class Protocal {
 	
 	private void fetchProtoSet()
 	{
+		if(loginSet.isEmpty()==false && loginSet.isEmpty()==false)
+		{
+			return;
+		}
+		
 		String pathname = MyResourcesPath.getProtocalPath();
 		File myFile = new File(pathname);
 		InputStream is;
@@ -42,14 +50,33 @@ public final class Protocal {
 			is = new FileInputStream(myFile);
 			String jsonStr = IOUtils.toString(is, StandardCharsets.UTF_8);
 			
-			System.out.println(jsonStr);
+			JSONObject jsonObj = JSONObject.parseObject(jsonStr);
+			JSONArray loginArray =  jsonObj.getJSONArray("login");
+			JSONArray reqArray =  jsonObj.getJSONArray("request");
+			
+			if(loginArray != null)
+			{
+				loginSet.clear();
+				for (Object protoName : loginArray) {
+					loginSet.add((String)protoName);
+				}
+			}
+			
+			if(reqArray != null)
+			{
+				RequestSet.clear();
+				for (Object protoName : reqArray) {
+					RequestSet.add((String)protoName);
+				}
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	//检查登录协议是否有效
+	//妫�鏌ョ櫥褰曞崗璁槸鍚︽湁鏁�
 	public boolean checkLoginValid(String protoName)
 	{
 		fetchProtoSet();
@@ -62,7 +89,7 @@ public final class Protocal {
 		return false;
 	}
 	
-	//检查请求协议是否有效
+	//妫�鏌ヨ姹傚崗璁槸鍚︽湁鏁�
 	public boolean checkRequestValid(String protoName)
 	{
 		fetchProtoSet();
