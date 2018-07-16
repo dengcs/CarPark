@@ -1,0 +1,13 @@
+{
+	"login" : 
+	[
+		"register",
+		"login",
+		"logout"
+	],
+	"request" :
+	[
+		"setPosition",
+		"getPosition"
+	]
+}
