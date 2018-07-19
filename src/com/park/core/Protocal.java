@@ -76,7 +76,6 @@ public final class Protocal {
 		
 	}
 	
-	//妫�鏌ョ櫥褰曞崗璁槸鍚︽湁鏁�
 	public boolean checkLoginValid(String protoName)
 	{
 		fetchProtoSet();
@@ -89,7 +88,6 @@ public final class Protocal {
 		return false;
 	}
 	
-	//妫�鏌ヨ姹傚崗璁槸鍚︽湁鏁�
 	public boolean checkRequestValid(String protoName)
 	{
 		fetchProtoSet();
