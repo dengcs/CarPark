@@ -1,11 +1,22 @@
 package com.park.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import com.park.service.BaseService;
+import com.park.service.UserService;
+
 public final class Dispatcher {
 	private static Dispatcher instance = null;
 	
+	private List<BaseService> loginServiceList = new ArrayList<BaseService>();
+	private List<BaseService> RequestServiceList = new ArrayList<BaseService>();
+	
 	private Dispatcher()
 	{
-		
+		loginServiceList.add(new UserService());
 	}
 	
 	public synchronized static Dispatcher getInstance()
@@ -18,20 +29,27 @@ public final class Dispatcher {
 		return instance;
 	}
 	
-	public boolean login_dispatch(String msg)
+	public boolean login_dispatch(HttpServletResponse response, String protoName, String data)
 	{
-		if(Protocal.getInstance().checkLoginValid(""))
+		for(BaseService service:loginServiceList)
 		{
-			return true;
+			if(service.messageHandle(response, protoName, data))
+			{
+				return true;
+			}
 		}
+		
 		return false;
 	}
 	
-	public boolean request_dispatch(String msg)
+	public boolean request_dispatch(HttpServletResponse response, String protoName, String data)
 	{
-		if(Protocal.getInstance().checkLoginValid(""))
+		for(BaseService service:RequestServiceList)
 		{
-			return true;
+			if(service.messageHandle(response, protoName, data))
+			{
+				return true;
+			}
 		}
 		return false;
 	}

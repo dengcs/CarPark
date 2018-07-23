@@ -27,8 +27,9 @@ public class RequestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String protoName = request.getParameter("protoName");
 		String data = request.getParameter("data");
-		boolean bSuc = Dispatcher.getInstance().request_dispatch(data);
+		boolean bSuc = Dispatcher.getInstance().request_dispatch(response, protoName, data);
 		if(!bSuc)
 		{
 			response.getWriter().append("{\"error\":-1}").flush();
