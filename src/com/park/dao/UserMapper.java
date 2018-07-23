@@ -1,6 +1,6 @@
 package com.park.dao;
 
-import com.park.model.User;
+import com.park.beans.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);

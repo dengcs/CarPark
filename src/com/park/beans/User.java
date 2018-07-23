@@ -1,4 +1,4 @@
-package com.park.model;
+package com.park.beans;
 
 public class User {
     private Integer id;
