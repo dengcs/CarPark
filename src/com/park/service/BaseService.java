@@ -6,8 +6,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSON;
 import com.park.beans.ServerError;
+import com.park.core.PostMessage;
 
 public abstract class BaseService {
 	
@@ -50,14 +50,10 @@ public abstract class BaseService {
 					try {
 						method.invoke(service, response, data);
 					} catch (Exception e) {
-						try {
-							ServerError error = new ServerError();
-							error.setError(-2);
-							error.setDescribe(data);
-							response.getWriter().append(JSON.toJSONString(error)).flush();
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
+						ServerError error = new ServerError();
+						error.setError(-2);
+						error.setDescribe(data);
+						PostMessage.error(response, error);
 						e.printStackTrace();
 					}
 				}
