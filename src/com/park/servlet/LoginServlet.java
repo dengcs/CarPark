@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
+import com.park.beans.ServerError;
 import com.park.core.Dispatcher;
 
 /**
@@ -32,7 +34,9 @@ public class LoginServlet extends HttpServlet {
 		boolean bSuc = Dispatcher.getInstance().login_dispatch(response, protoName, data);
 		if(!bSuc)
 		{
-			response.getWriter().append("{\"error\":-1}").flush();
+			ServerError error = new ServerError();
+			error.setError(-1);	
+			response.getWriter().append(JSON.toJSONString(error)).flush();
 		}
 	}
 

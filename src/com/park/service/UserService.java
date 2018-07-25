@@ -10,6 +10,12 @@ import com.park.core.DBTools;
 import com.park.dao.UserMapper;
 
 public class UserService extends BaseService{
+	
+	public UserService()
+	{
+		this.register();
+	}
+	
 	@Override
 	public void register() {
 		this.setProtocol(this);

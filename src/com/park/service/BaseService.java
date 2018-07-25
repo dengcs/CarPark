@@ -1,11 +1,13 @@
 package com.park.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSON;
+import com.park.beans.ServerError;
 
 public abstract class BaseService {
 	
@@ -47,11 +49,15 @@ public abstract class BaseService {
 					method.setAccessible(true);
 					try {
 						method.invoke(service, response, data);
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
+					} catch (Exception e) {
+						try {
+							ServerError error = new ServerError();
+							error.setError(-2);
+							error.setDescribe(data);
+							response.getWriter().append(JSON.toJSONString(error)).flush();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 						e.printStackTrace();
 					}
 				}
