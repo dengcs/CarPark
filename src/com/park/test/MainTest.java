@@ -10,8 +10,9 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		User user = new User();
-		user.setAge(10);
-		user.setName("dengcs");
+		user.setAccount("dengcs");
+		user.setPassword("123456");
+		user.setName("小邓");
 		user.setSex(1);
 		
 		SqlSession session = DBTools.getSession();

@@ -31,11 +31,20 @@ public class RequestServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String protoName = request.getParameter("protoName");
 		String data = request.getParameter("data");
+		
+		if(data==null || "".equals(data))
+		{
+			ServerError error = new ServerError();
+			error.setError(-1);
+			PostMessage.error(response, error);
+			return;
+		}
+		
 		boolean bSuc = Dispatcher.getInstance().request_dispatch(response, protoName, data);
 		if(!bSuc)
 		{
 			ServerError error = new ServerError();
-			error.setError(-1);	
+			error.setError(-2);	
 			PostMessage.error(response, error);
 		}
 	}

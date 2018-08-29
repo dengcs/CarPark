@@ -51,7 +51,7 @@ public abstract class BaseService {
 						method.invoke(service, response, data);
 					} catch (Exception e) {
 						ServerError error = new ServerError();
-						error.setError(-2);
+						error.setError(-3);
 						error.setDescribe(data);
 						PostMessage.error(response, error);
 						e.printStackTrace();

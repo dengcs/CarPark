@@ -6,17 +6,19 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.park.service.BaseService;
+import com.park.service.PointService;
 import com.park.service.UserService;
 
 public final class Dispatcher {
 	private static Dispatcher instance = null;
 	
 	private List<BaseService> loginServiceList = new ArrayList<BaseService>();
-	private List<BaseService> RequestServiceList = new ArrayList<BaseService>();
+	private List<BaseService> requestServiceList = new ArrayList<BaseService>();
 	
 	private Dispatcher()
 	{
 		loginServiceList.add(new UserService());
+		requestServiceList.add(new PointService());
 	}
 	
 	public synchronized static Dispatcher getInstance()
@@ -44,7 +46,7 @@ public final class Dispatcher {
 	
 	public boolean request_dispatch(HttpServletResponse response, String protoName, String data)
 	{
-		for(BaseService service:RequestServiceList)
+		for(BaseService service:requestServiceList)
 		{
 			if(service.messageHandle(response, protoName, data))
 			{

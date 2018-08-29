@@ -31,6 +31,16 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String protoName = request.getParameter("protoName");
 		String data = request.getParameter("data");
+		
+		if(data==null || "".equals(data))
+		{
+			ServerError error = new ServerError();
+			error.setError(-3);
+			error.setDescribe("data is null");
+			PostMessage.error(response, error);
+			return;
+		}
+		
 		boolean bSuc = Dispatcher.getInstance().login_dispatch(response, protoName.trim(), data.trim());
 		if(!bSuc)
 		{

@@ -60,10 +60,26 @@ public class UserService extends BaseService{
 		}else
 		{
 			ServerError error = new ServerError();
-			error.setError(-3);
+			error.setError(-4);
 			error.setDescribe("data is null");
 			PostMessage.error(response, error);
 		}
 		
+	}
+	
+	@ProtocolMethod
+	public void user_login(HttpServletResponse response, String jsonData)
+	{
+		User record = JSON.parseObject(jsonData, User.class);
+		
+		if(record != null)
+		{
+			SqlSession session = DBTools.getSession();
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			
+			User user = mapper.selectByUser(record);
+			
+			PostMessage.post(response, JSON.toJSONString(user));
+		}
 	}
 }
