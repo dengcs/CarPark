@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
 import com.park.beans.ServerError;
 import com.park.core.Dispatcher;
-import com.park.core.PostMessage;
 
 /**
  * Servlet implementation class LoginServlet
@@ -31,12 +31,12 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String protoName = request.getParameter("protoName");
 		String data = request.getParameter("data");
-		boolean bSuc = Dispatcher.getInstance().login_dispatch(response, protoName.trim(), data.trim());
+		boolean bSuc = Dispatcher.getInstance().login_dispatch(response, protoName, data);
 		if(!bSuc)
 		{
 			ServerError error = new ServerError();
 			error.setError(-1);	
-			PostMessage.error(response, error);
+			response.getWriter().append(JSON.toJSONString(error)).flush();
 		}
 	}
 

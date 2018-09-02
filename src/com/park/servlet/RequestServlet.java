@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
 import com.park.beans.ServerError;
 import com.park.core.Dispatcher;
-import com.park.core.PostMessage;
 
 /**
  * Servlet implementation class RequestServlet
@@ -36,7 +36,7 @@ public class RequestServlet extends HttpServlet {
 		{
 			ServerError error = new ServerError();
 			error.setError(-1);	
-			PostMessage.error(response, error);
+			response.getWriter().append(JSON.toJSONString(error)).flush();
 		}
 	}
 
